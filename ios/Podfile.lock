@@ -44,6 +44,10 @@ PODS:
   - GTMSessionFetcher/Core (1.2.2)
   - path_provider (0.0.1):
     - Flutter
+  - razorpay-pod (1.1.2)
+  - razorpay_plugin (0.0.1):
+    - Flutter
+    - razorpay-pod (~> 1.1.2)
   - Reachability (3.2)
   - share (0.5.2):
     - Flutter
@@ -62,6 +66,7 @@ DEPENDENCIES:
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - razorpay_plugin (from `.symlinks/plugins/razorpay_plugin/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -78,6 +83,7 @@ SPEC REPOS:
     - GoogleToolboxForMac
     - GoogleUtilities
     - GTMSessionFetcher
+    - razorpay-pod
     - Reachability
 
 EXTERNAL SOURCES:
@@ -93,6 +99,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_sign_in/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  razorpay_plugin:
+    :path: ".symlinks/plugins/razorpay_plugin/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
   shared_preferences:
@@ -118,6 +126,8 @@ SPEC CHECKSUMS:
   GoogleUtilities: c7a0b08bda3bf808be823ed151f0e28ac6866e71
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
+  razorpay-pod: bd7b4bfedd59002e7c30d96dd71fe31e740f2bcf
+  razorpay_plugin: 875b159a57298205d21cf42bd8fd02349af0833c
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523

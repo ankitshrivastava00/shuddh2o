@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:razorpay_plugin/razorpay_plugin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shuddh2o/DBUtils/DBProvider.dart';
 import 'package:shuddh2o/activity/success_page.dart';
@@ -144,7 +145,7 @@ class CheckOutPgaeState extends State<CheckOutPgae> {
     options.putIfAbsent("notes", () => notes);
     options.putIfAbsent("api_key", () => "rzp_live_jvB6dYPSWVYnEp");
     Map<dynamic,dynamic> paymentResponse = new Map();
-    //paymentResponse = await Razorpay.showPaymentForm(options);
+    paymentResponse = await Razorpay.showPaymentForm(options);
     print("response $paymentResponse");
     String code=paymentResponse['code'];
     String message=paymentResponse['message'];
@@ -373,6 +374,7 @@ class CheckOutPgaeState extends State<CheckOutPgae> {
                                     '${widget.paid}',
                                 style: TextStyle(
                                     fontSize: 15.0,
+
                                     color: Colors.lightBlue,
                                     fontWeight: FontWeight.normal),
                               ),
@@ -468,11 +470,11 @@ class CheckOutPgaeState extends State<CheckOutPgae> {
                           checkout(context);
                         }else if(radiovalue == "Online"){
                           double pd = double.parse('${widget.paid}');
-                          /*startPayment(pd,context);*/
-                          Navigator.pushReplacement(
+                          startPayment(pd,context);
+                          /*Navigator.pushReplacement(
                               context,
                               new MaterialPageRoute(
-                                  builder: (BuildContext context) => SuccessPage()));
+                                  builder: (BuildContext context) => SuccessPage()));*/
                         }
 
                       },

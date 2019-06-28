@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:shuddh2o/DBUtils/DBProvider.dart';
+import 'package:shuddh2o/activity/Cart.dart';
 import 'package:shuddh2o/common/spinner_input.dart';
 import 'package:shuddh2o/model/order_model.dart';
 
@@ -18,6 +19,7 @@ class Details extends StatefulWidget{
 
 class DetailsState extends State<Details>{
   double spinner = 1;
+  int count =0;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -60,7 +62,15 @@ class DetailsState extends State<Details>{
     // TODO: implement initState
     super.initState();
     total=double.tryParse('${widget.detail.price}');
+    cartCount();
+  }
 
+
+  cartCount() async {
+    var cartitem =  await DBProvider.db.getCount();
+    setState(()  {
+      count =  cartitem;
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -73,8 +83,33 @@ class DetailsState extends State<Details>{
           backgroundColor: Colors.white,
           appBar: AppBar(
             title: Text("View Item"),
-            elevation: 0.0,
-          ),
+            actions: <Widget>[
+              Center
+                (child: Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: InkResponse(
+                      onTap: (){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Cart()));
+                      },
+                      child: Icon(Icons.shopping_cart),
+                    ),
+                  ),
+                  Positioned(
+
+                    child: Container(
+                      child: Text('${count}'),
+                      // child: Text((DBP.length > 0) ? model.cartListing.length.toString() : "",textAlign: TextAlign.center,style: TextStyle(color: Colors.orangeAccent,fontWeight: FontWeight.bold),),
+                    ),
+
+
+                  ),
+                ],
+              ),
+              ),
+            ],
+              ),
           body: Container(
             decoration: BoxDecoration(
                 border: Border(
@@ -292,6 +327,10 @@ class DetailsState extends State<Details>{
                         color: Colors.deepOrange,
                         onPressed: (){
                           DBProvider.db.newClient('${widget.detail.Id}','${widget.detail.Title}','${spinner}','${total}','${widget.detail.category}');
+                          Future.delayed(const Duration(milliseconds: 2000), () {
+                            cartCount();
+
+                          });
 
                         },
                         child: Text("ADD TO CART",style: TextStyle(color: Colors.white),),

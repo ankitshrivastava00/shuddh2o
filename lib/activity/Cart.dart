@@ -392,7 +392,9 @@ void _calcTotal() async{
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: Text("Cart")),
+      appBar: AppBar(title: Text("Cart"),
+
+      ),
       body: FutureBuilder<List<Client>>(
         future: DBProvider.db.getAllClients(),
         builder: (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {

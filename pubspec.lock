@@ -158,6 +158,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.3"
+  razorpay_plugin:
+    dependency: "direct main"
+    description:
+      name: razorpay_plugin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.9"
   share:
     dependency: "direct main"
     description:
