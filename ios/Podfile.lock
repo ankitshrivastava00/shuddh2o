@@ -1,0 +1,129 @@
+PODS:
+  - connectivity (0.0.1):
+    - Flutter
+    - Reachability
+  - Firebase/CoreOnly (6.3.0):
+    - FirebaseCore (= 6.0.3)
+  - Firebase/DynamicLinks (6.3.0):
+    - Firebase/CoreOnly
+    - FirebaseDynamicLinks (~> 4.0.0)
+  - firebase_dynamic_links (0.1.0):
+    - Firebase/DynamicLinks
+    - Flutter
+  - FirebaseAnalyticsInterop (1.2.0)
+  - FirebaseCore (6.0.3):
+    - GoogleUtilities/Environment (~> 6.0)
+    - GoogleUtilities/Logger (~> 6.0)
+  - FirebaseDynamicLinks (4.0.0):
+    - FirebaseAnalyticsInterop (~> 1.0)
+    - FirebaseCore (~> 6.0)
+  - Flutter (1.0.0)
+  - fluttertoast (0.0.2):
+    - Flutter
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - google_sign_in (0.0.1):
+    - Flutter
+    - GoogleSignIn (~> 4.0)
+  - GoogleSignIn (4.4.0):
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleToolboxForMac/DebugUtils (2.2.1):
+    - GoogleToolboxForMac/Defines (= 2.2.1)
+  - GoogleToolboxForMac/Defines (2.2.1)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.1)":
+    - GoogleToolboxForMac/DebugUtils (= 2.2.1)
+    - GoogleToolboxForMac/Defines (= 2.2.1)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.1)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.2.1)"
+  - GoogleUtilities/Environment (6.2.1)
+  - GoogleUtilities/Logger (6.2.1):
+    - GoogleUtilities/Environment
+  - GTMSessionFetcher/Core (1.2.2)
+  - path_provider (0.0.1):
+    - Flutter
+  - Reachability (3.2)
+  - share (0.5.2):
+    - Flutter
+  - shared_preferences (0.0.1):
+    - Flutter
+  - sqflite (0.0.1):
+    - Flutter
+    - FMDB (~> 2.7.2)
+  - url_launcher (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - connectivity (from `.symlinks/plugins/connectivity/ios`)
+  - firebase_dynamic_links (from `.symlinks/plugins/firebase_dynamic_links/ios`)
+  - Flutter (from `.symlinks/flutter/ios`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - share (from `.symlinks/plugins/share/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Firebase
+    - FirebaseAnalyticsInterop
+    - FirebaseCore
+    - FirebaseDynamicLinks
+    - FMDB
+    - GoogleSignIn
+    - GoogleToolboxForMac
+    - GoogleUtilities
+    - GTMSessionFetcher
+    - Reachability
+
+EXTERNAL SOURCES:
+  connectivity:
+    :path: ".symlinks/plugins/connectivity/ios"
+  firebase_dynamic_links:
+    :path: ".symlinks/plugins/firebase_dynamic_links/ios"
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
+  google_sign_in:
+    :path: ".symlinks/plugins/google_sign_in/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
+  share:
+    :path: ".symlinks/plugins/share/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
+  url_launcher:
+    :path: ".symlinks/plugins/url_launcher/ios"
+
+SPEC CHECKSUMS:
+  connectivity: c72716e202a1225ec4810740d5cb56b8ae3bf4cc
+  Firebase: 8432d732974498afd5987e9001a05f90f1a3d625
+  firebase_dynamic_links: 4b2a2629122f9d47f4e2b07e20b77edf27834799
+  FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
+  FirebaseCore: 68f8a7f50cdae542715d4e86afa37c4067217dcb
+  FirebaseDynamicLinks: 25fc45fdf2557ee2ee630999c301245d8911792e
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  fluttertoast: b644586ef3b16f67fae9a1f8754cef6b2d6b634b
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  google_sign_in: 27e70a98b529f0b076d4b19f231b81da28b1750b
+  GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
+  GoogleToolboxForMac: b3553629623a3b1bff17f555e736cd5a6d95ad55
+  GoogleUtilities: c7a0b08bda3bf808be823ed151f0e28ac6866e71
+  GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
+  path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
+  shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
+  sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
+  url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
+
+PODFILE CHECKSUM: fbf312a9e1754c344b494c23b25f303ff62bf1b1
+
+COCOAPODS: 1.7.2
