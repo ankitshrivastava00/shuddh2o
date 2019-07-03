@@ -65,13 +65,13 @@ class DetailsState extends State<Details>{
     cartCount();
   }
 
-
   cartCount() async {
     var cartitem =  await DBProvider.db.getCount();
     setState(()  {
       count =  cartitem;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -91,7 +91,7 @@ class DetailsState extends State<Details>{
                     padding: EdgeInsets.all(10.0),
                     child: InkResponse(
                       onTap: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Cart()));
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Cart('','','','','')));
                       },
                       child: Icon(Icons.shopping_cart),
                     ),

@@ -147,10 +147,8 @@ class _LoginState extends State<Login> {
     //  _incrementCounter(_email);
     try {
       if (emailController.text.isEmpty) {
-
         Fluttertoast.showToast(msg: "Enter Your Number", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIos: 1, backgroundColor: Colors.grey, textColor: Colors.white, fontSize: 16.0);
       } else  if (emailController.text.length!=10) {
-
         Fluttertoast.showToast(msg: "Enter Correct Number", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIos: 1, backgroundColor: Colors.grey, textColor: Colors.white, fontSize: 16.0);
       } else if (passwordController.text.isEmpty) {
         Fluttertoast.showToast(
@@ -164,13 +162,10 @@ class _LoginState extends State<Login> {
       } else {
         // registrationTask(_mobile);
         String url ="https://sheltered-woodland-33544.herokuapp.com/loginWebService";
-
         Map map = {
-
           "password":passwordController.text,
           "mobile":emailController.text
         };
-
         apiCallForUserProfile(url, map);
       }
     } catch (e) {
@@ -180,15 +175,11 @@ class _LoginState extends State<Login> {
   }
 
   Future<String> apiCallForUserProfile(String url, Map jsonMap) async {
-
     CustomProgressLoader.showLoader(context);
-
     var isConnect = await ConectionDetecter.isConnected();
-
       if (isConnect) {
     try {
          SharedPreferences prefs = await SharedPreferences.getInstance();
-
          HttpClient httpClient = new HttpClient();
          HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
          request.headers.set('content-type', 'application/json');
@@ -243,9 +234,7 @@ class _LoginState extends State<Login> {
             prefs.setString(UserPreferences.USER_MOBILE,word['mobile'].toString().trim());
           }
           prefs.setString(UserPreferences.USER_TOKEN,token);
-
-          Navigator.pushReplacement(context
-              ,new MaterialPageRoute(builder: (BuildContext context) => Otp()));
+          Navigator.pushReplacement(context,new MaterialPageRoute(builder: (BuildContext context) => Otp()));
           return reply;
         } else   if (status == "unsuccess") {
           Fluttertoast.showToast(

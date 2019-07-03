@@ -1,4 +1,3 @@
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,7 +15,7 @@ class Forgot extends StatefulWidget {
 class _ForgotState extends State<Forgot> {
   //For subscription to the ConnectivityResult stream
 
-  String _contactText,reply;
+  String reply;
   Response response;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();

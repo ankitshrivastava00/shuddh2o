@@ -40,6 +40,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       headers: {HttpHeaders.authorizationHeader: token,
         HttpHeaders.contentTypeHeader : "application/json"},
     );
+
     if (response.statusCode == 200) {
       list = (json.decode(response.body) as List)
           .map((data) => new ProfileModel.fromJson(data))
@@ -52,7 +53,6 @@ class _ProfileEditState extends State<ProfileEdit> {
     }
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -60,36 +60,25 @@ class _ProfileEditState extends State<ProfileEdit> {
     getSharedPreferences();
   }
 
-
   getSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     setState(() {
       userId = prefs.getString(UserPreferences.USER_ID);
-
        _token = prefs.getString(UserPreferences.USER_TOKEN);
       _fetchData(_token,userId);
-        });
-
+     });
   }
-
 
   void _submit() {
     final form = formKey.currentState;
-
     if (form.validate()) {
       form.save();
-      // fetchData();
-      // Email & password matched our validation rules
-      // and are saved to _email and _password fields.
       _performLogin(_token,userId);
-
     }
   }
 
   void _performLogin(String TokenID,String UserID) {
     try {
-
       String url = Constants.BASE_URL + Constants.UPDATE_PROFILE;
       Map map = {
         "name": _first_name ,

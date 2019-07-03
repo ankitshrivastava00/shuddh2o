@@ -16,10 +16,13 @@ import 'dart:math';
 
 import 'package:shuddh2o/common/UserPreferences.dart';
 import 'package:shuddh2o/drawer/home_pages.dart';
+import 'package:shuddh2o/fragment/Coupan.dart';
 
 import 'checkout.dart';
 class Cart extends StatefulWidget{
   static final String route = "Cart-route";
+  String id, name, code, type, price;
+  Cart(this.id, this.name, this.code, this.type, this.price);
 
   @override
   State<StatefulWidget> createState() {
@@ -29,27 +32,42 @@ class Cart extends StatefulWidget{
 }
 
 class CartState extends State<Cart>{
-  double _total;
+  double  carttotal=0.0,discount_amount = 0.0, paid_amount = 0.0, con = 0.0;
+  double _total=0.0;
   Client item;
   List<Client> _cart = [];
+  String coupan = "Promo Code";
   String reply;
   TextEditingController promocodeController = new TextEditingController();
-
+  var product_name = new StringBuffer();
+  var product_id = new StringBuffer();
+  var price = new StringBuffer();
+  var category = new StringBuffer();
+  var quantity = new StringBuffer();
+  var availablequantity = new StringBuffer();
 
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
-setState(() {
-  _calcTotal();
-  getSharedPreferences();
-
-});
+     super.initState();
+     setState(() => coupan = '${widget.code}');
+     setState(() {
+    _calcTotal();
+     getSharedPreferences();
+   });
   }
 
-  void checkoutData(String status,String paymentId,String OrderId) async{
+  Future dltCoupan() async {
+    var total = (await DBProvider.db.calculateTotal())[0]['Total'];
+    setState(() => coupan = '');
+    setState(() => carttotal = total);
+    setState(() => paid_amount = carttotal);
+    setState(() => con = 0.0);
+  }
+
+  void checkoutData(String status,String paymentId,String OrderId) async {
     try {
-      if (_total == 0.0) {
+      if (carttotal == 0.0) {
         Fluttertoast.showToast(msg: "Cart Is Empty", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIos: 1, backgroundColor: Colors.grey, textColor: Colors.white, fontSize: 16.0);
       } else {
     var product_name = new StringBuffer();
@@ -85,7 +103,6 @@ setState(() {
         category.write('${_cart[i].category}');
         quantity.write('${_cart[i].quantity}');
         availablequantity.write('100');
-
       }else{
         product_name.write(',${_cart[i].product_name}');
         product_id.write(',${_cart[i].product_id}');
@@ -95,11 +112,8 @@ setState(() {
         availablequantity.write(',100');
       }
      }
-
-
         // registrationTask(_mobile);
         String url ="https://sheltered-woodland-33544.herokuapp.com/order";
-
         Map map = {
           "paymentid":'${paymentId}',
           "paymentStatus":'${status}',
@@ -124,15 +138,9 @@ setState(() {
 
   void checkoutData1() async{
     try {
-      if (_total == 0.0) {
+      if (carttotal == 0.0) {
         Fluttertoast.showToast(msg: "Cart Is Empty", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIos: 1, backgroundColor: Colors.grey, textColor: Colors.white, fontSize: 16.0);
       } else {
-    var product_name = new StringBuffer();
-    var product_id = new StringBuffer();
-    var price = new StringBuffer();
-    var category = new StringBuffer();
-    var quantity = new StringBuffer();
-    var availablequantity = new StringBuffer();
     product_name.clear();
     product_id.clear();
     price.clear();
@@ -160,8 +168,7 @@ setState(() {
         category.write('${_cart[i].category}');
         quantity.write('${_cart[i].quantity}');
         availablequantity.write('100');
-
-      }else{
+      } else {
         product_name.write(',${_cart[i].product_name}');
         product_id.write(',${_cart[i].product_id}');
         price.write(',${_cart[i].price}');
@@ -170,11 +177,8 @@ setState(() {
         availablequantity.write(',100');
       }
      }
-
-
       /*  // registrationTask(_mobile);
         String url ="https://sheltered-woodland-33544.herokuapp.com/order";
-
         Map map = {
           "paymentid":'${paymentId}',
           "paymentStatus":'${status}',
@@ -188,8 +192,8 @@ setState(() {
           "orderid":'${OrderId}',
           "avelabelQuentity":'[${availablequantity}]'
         };*/
-    Navigator.pushReplacement(context
-        ,new MaterialPageRoute(builder: (BuildContext context) => CheckOutPgae('${_total}',"0.0",'${_total}','test123','${product_id}','${product_name}','${price}','${quantity}')));
+
+
 
     //apiCallForUserProfile(url, map);
       }
@@ -198,17 +202,22 @@ setState(() {
     }
 
   }
+
 void _calcTotal() async{
 
   var total = (await DBProvider.db.calculateTotal())[0]['Total'];
+  con = double.parse('${widget.price}');
+
   print('sdgfsfsdgsdfgsd ${total}');
   setState(() {
-    if (total != null){
-      _total = total;
-
+    print('sdgfsfsdgsdfgsd ${total}');
+    if(total != null){
+      setState(() => carttotal = total);
+      setState(() => paid_amount = carttotal - con);
     }else{
-      _total = 0.0;
-
+      setState(() => carttotal = 0.0);
+      setState(() => discount_amount = 0.0);
+      setState(() => paid_amount = 0.0);
     }
   });
   //setState(() => );
@@ -236,6 +245,7 @@ void _calcTotal() async{
 
     return new String.fromCharCodes(codeUnits);
   }
+
   startPayment(double amount) async {
     var uniq = _randomString(10);
     var isConnect = await ConectionDetecter.isConnected();
@@ -303,11 +313,8 @@ void _calcTotal() async{
   }
 
   Future<String> apiCallForUserProfile(String url, Map jsonMap) async {
-
     CustomProgressLoader.showLoader(context);
-
     var isConnect = await ConectionDetecter.isConnected();
-
     if (isConnect) {
       try {
 
@@ -360,7 +367,6 @@ void _calcTotal() async{
               fontSize: 16.0);
           return  reply;
         }
-
       } catch (e) {
         print(e);
         CustomProgressLoader.cancelLoader(context);
@@ -390,10 +396,9 @@ void _calcTotal() async{
 
 @override
   Widget build(BuildContext context) {
-
+  if(carttotal!=0.0){
     return Scaffold(
       appBar: AppBar(title: Text("Cart"),
-
       ),
       body: FutureBuilder<List<Client>>(
         future: DBProvider.db.getAllClients(),
@@ -402,15 +407,12 @@ void _calcTotal() async{
             return
               Column(
                 children: [
-
                   Expanded(child:
-
                   ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
                       item = snapshot.data[index];
                       print(item.category);
-
                       return Dismissible(
                         key: UniqueKey(),
                         background: Container(color: Colors.red),
@@ -499,78 +501,157 @@ void _calcTotal() async{
                         ),
                       );
                     },
-                  ),                  ),
-                  Container(
-                    margin: EdgeInsets.all(10.0),
-                    child:Padding(
-                      padding: EdgeInsets.all(5.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white12,
-                            border: Border(
-                              bottom: BorderSide(
-                                  color: Colors.grey[100],
-                                  width: 1.0
-                              ),
-                              top: BorderSide(
-                                  color: Colors.grey[100],
-                                  width: 1.0
-                              ),
-                            )
-                        ),
-                        height: 80.0,
-                        child: Center(
-                          child: Row(
-                          children: <Widget>[
+                  ),
 
-                            Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 10.0,left: 5.0),
-                                  child: Column(
-                                  //  crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: Container(
-                                              width: double.infinity,
-                                             child: TextFormField(
-                                              controller: promocodeController,
-                                              autofocus: false,
-                                              decoration: InputDecoration(
-                                                hintText: 'Enter Promo Code',
-                                                contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                                               // border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-                                              ),
-                                              ),
-                                            ),
-                                          ),
-                                        Expanded(
-                                            child: Container(
-                                          width: 40.0,
-                                          child:   RaisedButton(
-                                              color: Colors.blue,
-                                              onPressed: (){
-                                              },
-                                              child: Text("Apply",style: TextStyle(color: Colors.white),),
-                                            ),
-                                              margin: EdgeInsets.only(left: 30),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                  ),
+
+                  new Container(
+                    color: Colors.white10,
+                    margin: EdgeInsets.all(10.0),
+                    child: Container(
+                      child: Row(
+                        children: <Widget>[
+                          new GestureDetector(
+                            onTap: () async {
+                              Navigator.pushReplacement(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (BuildContext
+                                      context) => CoupanList()));
+                              setState(() {
+                              });
+                            },
+                            child: new Container(
+                              margin: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+                              alignment: Alignment.center,
+                              child: Text('Apply Coupan',style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 14.0,),),
+                              height: 40.0,
+                              width: 130.0,
+                              decoration: BoxDecoration(color: Colors.blue,
+                                  shape: BoxShape.rectangle),
+                            ),),
+                          new Container(
+                            margin: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+                            alignment: Alignment.center,
+                            child: Text('${coupan}',style: TextStyle(
+                                fontWeight: FontWeight.normal,color: Colors.black,fontSize: 15.0),),
+                            width: 130.0,
+                            height: 40.0,
+                            // decoration: BoxDecoration(border: Border.all(color: Colors.black26,width: 1.0)),
+                          ),
+                          new GestureDetector(
+                              onTap: () async {
+                                setState(() {
+                                  dltCoupan();
+                                });
+                              },
+                              child: new Container(
+                                  child: new Container(
+                                    margin: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.blue,
+                                    ),
+                                    height: 35.0,
+                                    width: 35.0,
+                                  ))),
+                        ],
+                      ),
+                    ),
+
+                  ),
+                  new Container(
+                      child: new Card(
+                        margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                        child: Column(
+                          children: <Widget>[
+                            new Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                new Container(
+                                  margin: EdgeInsets.fromLTRB(20.0, 2.0, 0.0, 0.0),
+                                  alignment: Alignment.topLeft,
+                                  child: new Text(
+                                    'Total Amount :',
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                )
-                            )
+                                ),
+                                new Container(
+                                  margin: EdgeInsets.fromLTRB(0.0, 2.0, 50.0, 0.0),
+                                  alignment: Alignment.topLeft,
+                                  child: new Text(
+                                    "Rs."'${carttotal}',
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            new Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                new Container(
+                                  margin: EdgeInsets.fromLTRB(20.0, 2.0, 0.0, 0.0),
+                                  alignment: Alignment.topLeft,
+                                  child: new Text(
+                                    'Discount Amount :',
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                new Container(
+                                  margin: EdgeInsets.fromLTRB(0.0, 2.0, 50.0, 0.0),
+                                  alignment: Alignment.topLeft,
+                                  child: new Text(
+                                    "Rs."'${con}',
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            new Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                new Container(
+                                  margin: EdgeInsets.fromLTRB(20.0, 2.0, 0.0, 2.0),
+                                  alignment: Alignment.topLeft,
+                                  child: new Text('Paid Amount :',
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                new Container(
+                                  margin: EdgeInsets.fromLTRB(0.0, 2.0, 50.0, 2.0),
+                                  alignment: Alignment.topLeft,
+                                  child: new Text(
+                                    "Rs."'${paid_amount}',
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                      ),
-                     ),
-                    ),
-                  ),
-                ],
+                      ))
+                  ],
               );
           } else {
             return Center(child: CircularProgressIndicator());
@@ -597,7 +678,7 @@ void _calcTotal() async{
                       width: 60.0,
                       child: Text("Total Amount",style: TextStyle(fontSize: 12.0,color: Colors.grey),),
                     ),
-                    Text( "Rs. ${_total}",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.w600)),
+                    Text( "Rs. ${paid_amount}",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.w600)),
                   //  Text("Rs. ${total}",style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.w600)),
                   ],
                 ),
@@ -607,11 +688,21 @@ void _calcTotal() async{
               RaisedButton(
                 color: Colors.deepOrange,
                 onPressed: (){
-               // checkout(DBProvider.db.getAllClientsCard());
-               //   checkoutData();
-                  //startPayment(_total);
                   checkoutData1();
-                      },
+                  Navigator.of(context).pushReplacement(
+                      new MaterialPageRoute(
+                        builder:(BuildContext context) =>
+                        new CheckOutPgae('${carttotal}',
+                            '${widget.price}',
+                            '${paid_amount}',
+                            '${widget.code}',
+                            '${product_id}',
+                            '${product_name}',
+                            '${price}',
+                            '${quantity}'),
+                      )
+                  );
+                  },
                 child: Text("Check Out",style: TextStyle(color: Colors.white),),
               ),
               //          },
@@ -620,5 +711,24 @@ void _calcTotal() async{
           )
       ),
     );
+  }else{
+    return Scaffold(
+      appBar: AppBar(title: Text("My Cart")),
+      backgroundColor: Colors.white,
+      body: new Stack(
+        children: <Widget>[
+          new Container(
+            decoration: new BoxDecoration(
+              image: new DecorationImage(
+                image: new AssetImage("images/bluecart.png"),
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
   }
+}
 }

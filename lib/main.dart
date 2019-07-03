@@ -42,9 +42,7 @@ class _MyAppState extends State<MyApp> {
         path ='/StartScreen';
         //Navigator.of(context).pushReplacementNamed('/StartScreen');
       }
-
     });
-
   }
 
    navigationPage() {

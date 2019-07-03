@@ -6,6 +6,7 @@ import 'package:shuddh2o/activity/logout.dart';
 import 'package:shuddh2o/activity/order_form.dart';
 import 'package:shuddh2o/activity/profile_edit.dart';
 import 'package:shuddh2o/common/UserPreferences.dart';
+import 'package:shuddh2o/fragment/Coupan.dart';
 import 'package:shuddh2o/fragment/all_categories_fragment.dart';
 import 'package:shuddh2o/fragment/order_fragment.dart';
 import 'package:shuddh2o/fragment/refer_earn.dart';
@@ -83,10 +84,10 @@ class HomePageState extends State<HomePage> {
       /*case 1:
         return new AllCategoriesFragment();*/
       case 1:
-        return new OrderFragment();
+        return new MyOrder();
       case 2:
         return new ReferEarn();
-    case 3:
+      case 3:
         return new OrderForm();
         case 4:
         return new Logout();
@@ -143,7 +144,7 @@ class HomePageState extends State<HomePage> {
                 padding: EdgeInsets.all(10.0),
                 child: InkResponse(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Cart()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Cart('','','','','0')));
                   },
                   child: Icon(Icons.shopping_cart),
                 ),
@@ -211,3 +212,4 @@ class HomePageState extends State<HomePage> {
     );
   }
 }
+

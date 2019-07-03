@@ -50,7 +50,7 @@ class _OtpState extends State<Otp> {
   getSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      userId = prefs.getString(UserPreferences.USER_ID);
+       userId = prefs.getString(UserPreferences.USER_ID);
       _token = prefs.getString(UserPreferences.USER_TOKEN);
     });
   }
